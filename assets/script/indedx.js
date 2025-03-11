@@ -1,3 +1,14 @@
+
+function removeActiveClass() {
+    const activeButtons = document.getElementsByClassName('active');
+
+    for (const button of activeButtons) {
+        button.classList.remove('active');
+    }
+}
+
+
+// Load Categories
 function loadCategories() {
     fetch('https://openapi.programming-hero.com/api/phero-tube/categories')
         .then(response => response.json())
@@ -10,7 +21,7 @@ function showCategories(categories) {
     for (const category of categories) {
         const div = document.createElement('div');
         div.innerHTML =
-            `<button onclick="loadCategoryVideos(${category.category_id})" 
+            `<button id="btn-${category.category_id}" onclick="loadCategoryVideos(${category.category_id})" 
             class="btn btn-sm hover:bg-rose-500 hover:text-white">${category.category}</button>`
         categoryContainer.appendChild(div);
     }
@@ -18,10 +29,16 @@ function showCategories(categories) {
 
 loadCategories();
 
+// Start Load Videos and Display Videos
+
 function loadVideos() {
     fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
         .then(response => response.json())
-        .then(data => displayVideos(data.videos));
+        .then(data => {
+            removeActiveClass();
+            document.getElementById('btn-all').classList.add('active')
+            displayVideos(data.videos)
+        });
 }
 
 const displayVideos = (videos) => {
@@ -33,9 +50,10 @@ const displayVideos = (videos) => {
                         <img class="w-[120px]" src="assets/images/Icon.png" alt="">
                         <h3 class="text-2xl font-bold">Oops!! Sorry, There is no content here</h3>
                     </div>`
+        return;
     }
     videos.forEach(video => {
-        // console.log(video);
+
         const div = document.createElement('div');
         div.innerHTML = `
                     <img class="rounded-md w-100 md:h-[220px] object-cover" src="${video.thumbnail}" alt="">
@@ -53,10 +71,18 @@ const displayVideos = (videos) => {
     });
 }
 
+// Load Category wise video using ID (Dynamic Way)
+
 const loadCategoryVideos = (id) => {
     const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
-    console.log(url)
+    // console.log(url)
     fetch(url)
         .then((response) => response.json())
-        .then((data) => displayVideos(data.category));
+        .then((data) => {
+            const clickBtn = document.getElementById(`btn-${id}`);
+            removeActiveClass();
+            clickBtn.classList.add('active');
+            console.log(clickBtn);
+            displayVideos(data.category)
+        });
 }
