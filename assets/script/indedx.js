@@ -27,6 +27,13 @@ function loadVideos() {
 const displayVideos = (videos) => {
     const videoContainer = document.getElementById('video-container');
     videoContainer.innerHTML = "";
+    if (videos.length === 0) {
+        videoContainer.innerHTML = `
+                    <div class="col-span-full flex flex-col justify-center items-center py-28 text-center">
+                        <img class="w-[120px]" src="assets/images/Icon.png" alt="">
+                        <h3 class="text-2xl font-bold">Oops!! Sorry, There is no content here</h3>
+                    </div>`
+    }
     videos.forEach(video => {
         // console.log(video);
         const div = document.createElement('div');
