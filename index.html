@@ -10,8 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!--  -->
     <style>
-        .active{
+        .active {
             background-color: rgb(255, 10, 104);
+            color: white;
         }
     </style>
 </head>
@@ -38,11 +39,23 @@
             </div>
         </nav>
 
-
-
         <section id="video-container" class="w-11/12 mx-auto px-2 grid grid-cols-4 gap-5">
-            
         </section>
+
+        <!-- Open the modal using ID.showModal() method -->
+        <!-- <button class="btn" onclick="my_modal_1.">open modal</button> -->
+        <dialog id="my_modal_1" class="modal">
+            <div class="modal-box">
+                <div id="video-details"></div>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <!-- if there is a button in form, it will close the modal -->
+                        <button class="btn">Close</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+
     </main>
 
     <script src="assets/script/indedx.js"></script>
